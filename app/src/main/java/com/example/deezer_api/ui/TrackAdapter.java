@@ -19,10 +19,11 @@ import com.example.deezer_api.model.Track;
 
 import java.util.ArrayList;
 
-public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolderDatos> {
+public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolderDatos> implements View.OnClickListener{
 
     private PlayListActivity playListActivity;
     private ArrayList<Track> tracks;
+    private View.OnClickListener listener;
 
     public TrackAdapter(PlayListActivity playListActivity, ArrayList<Track> tracks) {
         this.playListActivity = playListActivity;
@@ -33,6 +34,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolderDa
     @Override
     public ViewHolderDatos onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler, null, false);
+        view.setOnClickListener(this);
         return new ViewHolderDatos(view);
     }
 
@@ -44,6 +46,37 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolderDa
     @Override
     public int getItemCount() {
         return tracks.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(listener != null) {
+            listener.onClick(v);
+        }
+    }
+
+    public PlayListActivity getPlayListActivity() {
+        return playListActivity;
+    }
+
+    public void setPlayListActivity(PlayListActivity playListActivity) {
+        this.playListActivity = playListActivity;
+    }
+
+    public ArrayList<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(ArrayList<Track> tracks) {
+        this.tracks = tracks;
+    }
+
+    public View.OnClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(View.OnClickListener listener) {
+        this.listener = listener;
     }
 
     public class ViewHolderDatos extends RecyclerView.ViewHolder {
@@ -64,15 +97,6 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolderDa
             TV2.setText("Artist: "+ track.getArtist().getName());
             TV3.setText("Date: "+ track.getRelease_date());
             Glide.with(itemView).load(track.getAlbum().getCover()).centerCrop().into(image);
-
-           /* itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(playListActivity, PlayListActivity.class);
-                    i.putExtra("playList", playList);
-                    mainActivity.startActivity(i);
-                }
-            });*/
         }
     }
 }

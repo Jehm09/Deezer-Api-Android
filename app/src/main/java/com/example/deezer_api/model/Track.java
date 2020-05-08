@@ -7,21 +7,31 @@ public class Track {
     private String link;
     private Long duration;
     private String release_date;
+    private String preview;
     private Artist artist;
     private Album album;
 
-    public Track(Long id, String title, String link, Long duration, String release_date, Artist artist, Album album) {
+    public Track(Long id, String title, String link, Long duration, String release_date, String preview, Artist artist, Album album) {
         this.id = id;
         this.title = title;
         this.link = link;
         this.duration = duration;
         this.release_date = release_date;
+        this.preview = preview;
         this.artist = artist;
         this.album = album;
     }
 
     public Track() {
 
+    }
+
+    public String getPreview() {
+        return preview;
+    }
+
+    public void setPreview(String preview) {
+        this.preview = preview;
     }
     public String getRelease_date() {
         return release_date;

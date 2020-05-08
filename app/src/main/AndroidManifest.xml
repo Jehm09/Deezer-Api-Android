@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.PlayListActivity"></activity>
-<!--        <activity android:name=".ui."></activity>-->
+        <activity android:name=".ui.TrackActivity"></activity>
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

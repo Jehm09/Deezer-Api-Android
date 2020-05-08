@@ -37,10 +37,8 @@ public class MainController implements View.OnClickListener, HTTPSWebUtilDomi.On
                 i.putExtra("url", id+"");
                 mainActivity.startActivity(i);
                 Log.e(">>>>>>", "ID: " + id);
-                //Toast.makeText(mainActivity.getApplicationContext(), "Id " + id , Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 

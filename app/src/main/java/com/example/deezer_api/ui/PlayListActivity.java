@@ -1,8 +1,8 @@
 package com.example.deezer_api.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,14 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.deezer_api.R;
 import com.example.deezer_api.control.PlaylistController;
-import com.example.deezer_api.model.PlayList;
+
 
 
 public class PlayListActivity extends AppCompatActivity {
 
     private PlaylistController playlistController;
-
-    private PlayList playList;
 
     private RecyclerView tracksRecycler;
     private ImageView coverIV;
@@ -49,14 +47,6 @@ public class PlayListActivity extends AppCompatActivity {
 
     public void setPlaylistController(PlaylistController playlistController) {
         this.playlistController = playlistController;
-    }
-
-    public PlayList getPlayList() {
-        return playList;
-    }
-
-    public void setPlayList(PlayList playList) {
-        this.playList = playList;
     }
 
     public RecyclerView getTracksRecycler() {

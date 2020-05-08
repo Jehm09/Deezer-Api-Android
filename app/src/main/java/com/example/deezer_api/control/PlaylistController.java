@@ -1,11 +1,14 @@
 package com.example.deezer_api.control;
 
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.example.deezer_api.model.PlayList;
 import com.example.deezer_api.model.Track;
 import com.example.deezer_api.ui.PlayListActivity;
+import com.example.deezer_api.ui.TrackActivity;
 import com.example.deezer_api.ui.TrackAdapter;
 import com.example.deezer_api.util.Constants;
 import com.example.deezer_api.util.HTTPSWebUtilDomi;
@@ -19,7 +22,6 @@ public class PlaylistController implements HTTPSWebUtilDomi.OnResponseListener {
     private HTTPSWebUtilDomi util;
     private PlayList playList;
     private ArrayList<Track> trackList;
-    private int flag;
 
     private TrackAdapter trackAdapter;
     private String idPlaylist;
@@ -39,12 +41,17 @@ public class PlaylistController implements HTTPSWebUtilDomi.OnResponseListener {
         ).start();
     }
 
-    public String getIdPlaylist() {
-        return idPlaylist;
-    }
-
-    public void setIdPlaylist(String idPlaylist) {
-        this.idPlaylist = idPlaylist;
+    public void addEventTrackAdapter() {
+        trackAdapter.setListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(playListActivity, TrackActivity.class);
+                long id = trackAdapter.getTracks().get(playListActivity.getTracksRecycler().getChildAdapterPosition(v)).getId();
+                i.putExtra("url", id + "");
+                playListActivity.startActivity(i);
+                //Toast.makeText(mainActivity.getApplicationContext(), "Id " + id , Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -55,7 +62,7 @@ public class PlaylistController implements HTTPSWebUtilDomi.OnResponseListener {
             //Loads the view
             playListActivity.runOnUiThread(
                     () -> {
-                        Glide.with(playListActivity).load(playList.getPicture_big()).fitCenter().into(playListActivity.getCoverIV());
+                        Glide.with(playListActivity).load(playList.getPicture_big()).centerCrop().into(playListActivity.getCoverIV());
                         playListActivity.getNamePlaylist().setText(playList.getTitle());
                         playListActivity.getDescription().setText("Description: " + playList.getDescription());
                         playListActivity.getNumCanciones().setText("# Songs: " + playList.getNb_tracks());
@@ -74,8 +81,11 @@ public class PlaylistController implements HTTPSWebUtilDomi.OnResponseListener {
                         () -> {
                             trackAdapter = new TrackAdapter(playListActivity, trackList);
                             playListActivity.getTracksRecycler().setAdapter(trackAdapter);
+                            addEventTrackAdapter();
                         }
                 );
+
+                Log.e(">>>>>", "Se cargo Correctamente");
             }
             //Log.e(">>>>>>>>>", track.getTitle());
             //Log.e(">>>>>>>>>", trackList.get(0).getTitle() + "");
